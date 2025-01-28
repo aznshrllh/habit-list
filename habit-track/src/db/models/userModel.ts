@@ -1,53 +1,52 @@
 import { z } from "zod";
 import { database } from "../configs/mongoConfig";
 import { ObjectId } from "mongodb";
-import { UserType } from "@/types";
+import { AppError, UserType } from "@/types";
 import { hashPassword } from "@/helpers/bcrypt";
-
-const logSchema = z.object({
-  _id: z.string().optional(),
-  name: z.string(),
-  date: z.string(),
-  completed: z.boolean(),
-});
-
-const habitSchema = z.object({
-  _id: z.string().optional(),
-  name: z.string().min(3, "Name must be at least 3 characters"),
-  goal: z.number().min(1, "Goal must be at least 1"),
-  logs: z.array(logSchema),
-});
+import errorHandler from "@/helpers/errorHandler";
 
 const userSchema = z.object({
-  _id: z.string().optional(),
   name: z.string().min(3, "Name must be at least 3 characters"),
   email: z.string().email("Invalid email format"),
   password: z.string().min(8, "Password must be at least 8 characters"),
-  habits: z.array(habitSchema),
 });
 
 export default class UserModel {
   static collection() {
-    return database.collection<UserType>("users");
+    const db = database();
+    const collection = db.collection<UserType>("users");
+    return collection;
   }
 
   static async create(user: UserType) {
-    userSchema.parse(user);
+    try {
+      userSchema.parse(user);
 
-    const existingUser = await this.collection().findOne({ email: user.email });
+      const existingUser = await this.findByEmail(user.email);
 
-    if (existingUser) {
-      throw new Error("User already exists");
+      if (existingUser) {
+        throw {
+          message: "Email already exists",
+          status: 400,
+        };
+      }
+
+      user.password = hashPassword(user.password);
+
+      const result = {
+        ...user,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      await this.collection().insertOne(result);
+
+      console.log(result, "<<<< result");
+      return result;
+    } catch (err) {
+      console.log(err, "<<<< error");
+      return errorHandler(err as AppError);
     }
-
-    user.password = hashPassword(user.password);
-
-    const result = {
-      ...user,
-      habits: [],
-    };
-
-    return this.collection().insertOne(result);
   }
 
   static async findByEmail(email: string) {

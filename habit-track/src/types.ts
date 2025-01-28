@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb";
+import { ZodError } from "zod";
 
 export type UserType = {
   _id?: ObjectId;
@@ -22,3 +23,10 @@ export type IntervalType = {
   date: string;
   completed: boolean;
 };
+
+export type CustomError = {
+  message: string;
+  status: number;
+};
+
+export type AppError = CustomError | Error | ZodError;

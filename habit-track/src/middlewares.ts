@@ -5,7 +5,9 @@ import { verifyTokenJose } from "./helpers/jwt";
 export async function middleware(req: NextRequest) {
   // const cookie = req.cookies.get("habit-track-token");
 
-  const authorization = req.cookies.get("authorization")?.value;
+  const cookieStore = await cookies();
+
+  const authorization = cookieStore.get("authorization")?.value;
 
   if (!authorization) {
     return NextResponse.json(

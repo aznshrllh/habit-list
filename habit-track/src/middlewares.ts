@@ -38,6 +38,6 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/api/habits/:path*"],
+  matcher: ["/api/habits/:path*", "/api/habits"],
 };
 //Now, let’s use this middleware in our  /api/habits  endpoint.

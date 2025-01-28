@@ -6,7 +6,6 @@ export async function middleware(req: NextRequest) {
   // const cookie = req.cookies.get("habit-track-token");
 
   const cookieStore = await cookies();
-
   const authorization = cookieStore.get("authorization")?.value;
 
   if (!authorization) {
@@ -32,7 +31,7 @@ export async function middleware(req: NextRequest) {
     },
   });
 
-  response.cookies.set("authorization", authorization);
+  // response.cookies.set("authorization", authorization);
 
   return response;
 }

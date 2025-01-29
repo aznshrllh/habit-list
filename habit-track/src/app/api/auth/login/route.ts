@@ -37,7 +37,7 @@ export async function POST(request: Request) {
       maxAge: 60 * 60 * 24,
     });
 
-    console.log(response.cookies, "<<<< response.cookies");
+    // console.log(response.cookies, "<<<< response.cookies");
 
     return Response.json(
       { message: "Logged in", access_token },

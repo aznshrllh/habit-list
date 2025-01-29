@@ -31,7 +31,7 @@ export async function middleware(req: NextRequest) {
     },
   });
 
-  // response.cookies.set("authorization", authorization);
+  response.cookies.set("authorization", authorization);
 
   return response;
 }

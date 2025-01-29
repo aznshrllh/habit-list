@@ -41,10 +41,10 @@ export default class UserModel {
 
       await this.collection().insertOne(result);
 
-      console.log(result, "<<<< result");
+      // console.log(result, "<<<< result");
       return result;
     } catch (err) {
-      console.log(err, "<<<< error");
+      // console.log(err, "<<<< error");
       return errorHandler(err as AppError);
     }
   }

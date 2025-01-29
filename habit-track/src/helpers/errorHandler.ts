@@ -1,9 +1,9 @@
-import { useError } from "@/context/errorContext";
+// import { useError } from "@/context/errorContext";
 import { AppError } from "@/types";
 import { z } from "zod";
 
 export default function errorHandler(err: AppError) {
-  const { setError } = useError();
+  // const { setError } = useError();
   let message = err.message || "Internal Server Error";
   let status = 500;
 
@@ -16,7 +16,8 @@ export default function errorHandler(err: AppError) {
     message = err.errors[0].message;
   }
 
-  setError(message);
+  // setError(message);
 
+  console.log(err, "<<<< error");
   return Response.json({ message: message }, { status: status });
 }

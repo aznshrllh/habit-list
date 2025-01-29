@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { useError } from "@/context/errorContext";
+// import { useError } from "@/context/errorContext";
 import { handleLogin } from "@/actions";
 // import { useRouter } from "next/router";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setError } = useError();
+  // const { setError } = useError();
   // const router = useRouter();
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -17,7 +17,7 @@ export default function LoginPage() {
       await handleLogin(email, password);
       window.location.href = "/dashboard"; // Redirect to dashboard
     } catch (error: any) {
-      setError(error.message);
+      // setError(error.message);
     }
   };
 

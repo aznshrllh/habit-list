@@ -30,7 +30,11 @@ export async function POST(request: Request) {
       email: user.email,
     });
 
-    const response = NextResponse.next();
+    const response = NextResponse.json(
+      { message: "Logged in", access_token },
+      { status: 200 }
+    );
+
     response.cookies.set("authorization", `Bearer ${access_token}`, {
       httpOnly: true,
       path: "/",
@@ -39,10 +43,7 @@ export async function POST(request: Request) {
 
     // console.log(response.cookies, "<<<< response.cookies");
 
-    return Response.json(
-      { message: "Logged in", access_token },
-      { status: 200 }
-    );
+    return response;
   } catch (err) {
     return errorHandler(err as AppError);
   }

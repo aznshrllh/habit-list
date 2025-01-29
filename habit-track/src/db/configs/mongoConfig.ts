@@ -20,7 +20,7 @@ export function database() {
 
   return db;
 }
-console.log(">>>>", uri);
+// console.log(">>>>", uri);
 
 // export const client = new MongoClient(uri);
 

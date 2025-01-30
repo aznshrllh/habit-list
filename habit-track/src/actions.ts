@@ -16,20 +16,18 @@ export async function handleLogin(email: string, password: string) {
       },
       body: JSON.stringify({ email, password }),
     });
+    const response = await res.json();
 
     if (!res.ok) {
-      throw new Error("Invalid email or password");
+      redirect(`/login?error=${encodeURIComponent(response.message)}`);
     }
-
-    const response = await res.json();
 
     const cookieStore = await cookies();
     cookieStore.set("authorization", `Bearer ${response.access_token}`);
 
-    // redirect("/dashboard");
     return response;
   } catch (error) {
-    return errorHandler(error as AppError);
+    throw error;
   }
 }
 
@@ -47,11 +45,13 @@ export async function handleRegister(
       body: JSON.stringify({ email, password, name }),
     });
 
+    const res = await response.json();
+
     if (!response.ok) {
-      throw new Error("Invalid email or password");
+      redirect(`/register?error={encodeURIComponent(res.message)}`);
     }
 
-    return await response.json();
+    return res;
   } catch (error) {
     return errorHandler(error as AppError);
   }

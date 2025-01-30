@@ -35,14 +35,6 @@ export async function POST(request: Request) {
       { status: 200 }
     );
 
-    response.cookies.set("authorization", `Bearer ${access_token}`, {
-      httpOnly: true,
-      path: "/",
-      maxAge: 60 * 60 * 24,
-    });
-
-    // console.log(response.cookies, "<<<< response.cookies");
-
     return response;
   } catch (err) {
     return errorHandler(err as AppError);

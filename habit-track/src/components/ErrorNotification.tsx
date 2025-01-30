@@ -1,26 +1,29 @@
-// "use client";
-// import { useError } from "@/context/errorContext";
-// import React, { useEffect } from "react";
-// import Swal from "sweetalert2";
-// import withReactContent from "sweetalert2-react-content";
+"use client";
 
-// const mySwal = withReactContent(Swal);
+import Swal from "sweetalert2";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
-// const ErrorNotification: React.FC = () => {
-//   const { error, setError } = useError();
+export default function ErrorNotification() {
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
 
-//   useEffect(() => {
-//     if (error) {
-//       mySwal.fire({
-//         title: "Oops...",
-//         text: error,
-//         icon: "error",
-//         confirmButtonText: "Ok",
-//       });
-//       setError(null);
-//     }
-//   }, [error, setError]);
-//   return null;
-// };
+  useEffect(() => {
+    if (error) {
+      Swal.fire({
+        title: "Failed!",
+        text: error,
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        // Remove the error parameter from the URL
+        const url = new URL(window.location.href);
+        url.searchParams.delete("error");
+        window.history.replaceState({}, document.title, url.pathname);
+      });
+    }
+  }, [error]);
 
-// export default ErrorNotification;
+  return null;
+}

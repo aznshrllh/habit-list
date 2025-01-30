@@ -19,5 +19,5 @@ export default function errorHandler(err: AppError) {
   // setError(message);
 
   console.log(err, "<<<< error");
-  return Response.json({ message: message }, { status: status });
+  return new Response(JSON.stringify({ message: message }), { status: status });
 }

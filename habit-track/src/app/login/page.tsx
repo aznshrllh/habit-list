@@ -23,6 +23,15 @@ export default function LoginPage() {
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError(null);
+    if (e.target.name === "email") {
+      setEmail(e.target.value);
+    } else {
+      setPassword(e.target.value);
+    }
+  };
+
   return (
     <>
       <ErrorNotification />
@@ -50,9 +59,9 @@ export default function LoginPage() {
                   type="email"
                   id="email"
                   name="email"
-                  placeholder="Email"
+                  placeholder="Enter your email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleChange}
                   className="grow"
                   required
                 />
@@ -79,9 +88,9 @@ export default function LoginPage() {
                   type="password"
                   id="password"
                   name="password"
-                  placeholder="Password"
+                  placeholder="Enter your password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={handleChange}
                   className="grow"
                   required
                 />

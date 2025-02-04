@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import LogoutButton from "./LogOut";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -12,9 +13,11 @@ export default function Navbar() {
     setIsLoggedIn(token);
   }, []);
 
+  const pathname = usePathname();
+
   if (!isLoggedIn) {
     return (
-      <div className="navbar bg-gray-100 shadow-sm">
+      <div className="navbar bg-base-100 shadow-sm">
         <div className="flex-1">
           <Link href="/" className="btn btn-ghost text-xl">
             HabitTrack
@@ -23,16 +26,21 @@ export default function Navbar() {
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
               <Link href="/about">About</Link>
             </li>
-            <li>
-              <Link href="/login" className="btn btn-sm btn-outline">
-                Login
-              </Link>
-            </li>
+            {pathname === "/login" ? (
+              <li>
+                <Link href="/register" className="btn btn-sm btn-outline">
+                  Register
+                </Link>
+              </li>
+            ) : (
+              <li>
+                <Link href="/login" className="btn btn-sm btn-outline">
+                  Login
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

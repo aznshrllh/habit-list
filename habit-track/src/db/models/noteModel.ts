@@ -14,8 +14,9 @@ export default class NoteModel {
     return db.collection<NoteType>("notes");
   }
 
-  static async create({ userId, body }: { userId: string; body: NoteType }) {
-    const { name, description } = body;
+  static async create(body: NoteType) {
+    const { name, description, userId } = body;
+    console.log(body, "<<<< body");
 
     const note = noteSchema.parse({ name, description });
 

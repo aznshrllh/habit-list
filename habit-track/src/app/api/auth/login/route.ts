@@ -35,6 +35,11 @@ export async function POST(request: Request) {
       { status: 200 }
     );
 
+    // response.headers.set(
+    //   "authorization",
+    //   `access_token=${access_token}; Path=/`
+    // );
+
     return response;
   } catch (err) {
     return errorHandler(err as AppError);

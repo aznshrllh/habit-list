@@ -16,6 +16,8 @@ export async function POST(request: Request) {
     userId: new ObjectId(userId),
   };
 
+  console.log(newNote, "<<<< newNote");
+
   const note = await NoteModel.create(newNote);
   return new Response(JSON.stringify(note), { status: 201 });
 }

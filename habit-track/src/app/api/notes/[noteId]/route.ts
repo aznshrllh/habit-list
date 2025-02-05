@@ -13,15 +13,10 @@ export async function PUT(
     const note = await NoteModel.findById(noteId.toString());
 
     if (!note) {
-      return new Response(JSON.stringify({ message: "Note not found" }), {
-        status: 404,
-      });
+      throw { message: "Note not found", status: 404 };
     }
-
     if (!userId) {
-      return new Response(JSON.stringify({ message: "Unauthorized" }), {
-        status: 401,
-      });
+      throw { message: "Unauthorized", status: 401 };
     }
     if (userId !== note.userId.toString()) {
       throw { message: "Unauthorized", status: 401 };

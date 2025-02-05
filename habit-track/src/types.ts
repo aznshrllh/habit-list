@@ -24,6 +24,15 @@ export type IntervalType = {
   completed: boolean;
 };
 
+export type NoteType = {
+  _id?: ObjectId;
+  name: string;
+  description: string;
+  userId: ObjectId;
+  // createdAt: string;
+  // updatedAt: string;
+};
+
 export type CustomError = {
   message: string;
   status: number;

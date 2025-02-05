@@ -33,4 +33,10 @@ export default class NoteModel {
     await this.collection().insertOne(result);
     return result;
   }
+
+  static async findByUserId(userId: string) {
+    return this.collection()
+      .find({ userId: new ObjectId(userId) })
+      .toArray();
+  }
 }

@@ -1,6 +1,5 @@
 import NoteModel from "@/db/models/noteModel";
 import UserModel from "@/db/models/userModel";
-import { ObjectId } from "mongodb";
 
 export async function POST(request: Request) {
   const userId = request.headers.get("x-user-id") as string;
@@ -31,5 +30,24 @@ export async function POST(request: Request) {
   // console.log(newNote, "<<<< newNote");
 
   const note = await NoteModel.create(newNote);
-  return new Response(JSON.stringify(note), { status: 201 });
+  return new Response(JSON.stringify({ message: `success adding notes` }), {
+    status: 201,
+  });
+}
+
+export async function GET(request: Request) {
+  const userId = request.headers.get("x-user-id") as string;
+  // console.log(userId, "<<<< userId");
+
+  const user = await UserModel.findById(userId);
+
+  if (!user) {
+    return new Response(JSON.stringify({ message: "User not found" }), {
+      status: 404,
+    });
+  }
+
+  const notes = await NoteModel.findByUserId(userId);
+
+  return new Response(JSON.stringify(notes), { status: 200 });
 }

@@ -62,4 +62,8 @@ export default class NoteModel {
 
     return result;
   }
+
+  static async deleteById(noteId: string) {
+    await this.collection().deleteOne({ _id: new ObjectId(noteId) });
+  }
 }

@@ -78,7 +78,7 @@ export async function DELETE(
   }
 
   try {
-    await NoteModel.collection().deleteOne({ _id: note._id });
+    await NoteModel.deleteById(noteId);
     return new Response(JSON.stringify({ message: "Note deleted" }), {
       status: 200,
     });

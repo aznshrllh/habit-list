@@ -8,6 +8,21 @@ export async function POST(request: Request) {
   const body = await request.json();
   // console.log(body, "<<<< body");
 
+  const user = await UserModel.findById(userId);
+
+  if (!user) {
+    return new Response(JSON.stringify({ message: "User not found" }), {
+      status: 404,
+    });
+  }
+
+  if (!body.name || !body.description) {
+    return new Response(
+      JSON.stringify({ message: "Name and description are required" }),
+      { status: 400 }
+    );
+  }
+
   const newNote = {
     ...body,
     userId: userId,

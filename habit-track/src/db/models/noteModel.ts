@@ -16,9 +16,10 @@ export default class NoteModel {
 
   static async create(body: NoteType) {
     const { name, description, userId } = body;
-    console.log(body, "<<<< body");
+    // console.log(body, "<<<< body");
 
     const note = noteSchema.parse({ name, description });
+    // console.log(note, "<<<< note");
 
     const result = {
       ...note,
@@ -26,6 +27,8 @@ export default class NoteModel {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
+
+    // console.log(result, "<<<< result");
 
     await this.collection().insertOne(result);
     return result;

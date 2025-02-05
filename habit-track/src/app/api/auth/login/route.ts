@@ -3,6 +3,7 @@ import { comparePassword } from "@/helpers/bcrypt";
 import errorHandler from "@/helpers/errorHandler";
 import { signToken } from "@/helpers/jwt";
 import { AppError } from "@/types";
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -35,10 +36,8 @@ export async function POST(request: Request) {
       { status: 200 }
     );
 
-    // response.headers.set(
-    //   "authorization",
-    //   `access_token=${access_token}; Path=/`
-    // );
+    const cookieStore = await cookies();
+    cookieStore.set({ name: "authorization", value: `Bearer ${access_token}` });
 
     return response;
   } catch (err) {

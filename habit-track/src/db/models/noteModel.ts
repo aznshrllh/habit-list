@@ -39,4 +39,27 @@ export default class NoteModel {
       .find({ userId: new ObjectId(userId) })
       .toArray();
   }
+
+  static async findById(noteId: string) {
+    return this.collection().findOne({ _id: new ObjectId(noteId) });
+  }
+
+  static async updateById(noteId: string, body: NoteType) {
+    const { name, description } = body;
+
+    const note = noteSchema.parse({ name, description });
+
+    const result = {
+      ...note,
+      updatedAt: new Date(),
+    };
+
+    await this.collection().updateOne(
+      { _id: new ObjectId(noteId) },
+      { $set: result }
+    );
+    return;
+
+    return result;
+  }
 }

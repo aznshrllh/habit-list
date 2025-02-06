@@ -17,7 +17,7 @@ export default function Navbar() {
 
   if (!isLoggedIn) {
     return (
-      <div className="navbar bg-base-100 shadow-sm">
+      <div className="navbar bg-base-100 shadow-xl fixed top-0 w-full z-50">
         <div className="flex-1">
           <Link href="/" className="btn btn-ghost text-xl">
             HabitTrack
@@ -48,7 +48,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 sticky top-0 z-50 shadow-xl">
       <div className="flex-1">
         <a className="btn btn-ghost text-xl">HabitTrack</a>
       </div>

@@ -15,6 +15,7 @@ export type HabitType = {
   category: string;
   points: number;
 };
+
 export type UserHabitType = {
   _id?: ObjectId;
   userId?: ObjectId;

@@ -11,6 +11,7 @@ export type UserType = {
 export type HabitType = {
   _id?: ObjectId;
   name: string;
+  slug: string;
   description: string;
   category: string;
   points: number;

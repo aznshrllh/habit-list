@@ -34,14 +34,22 @@ export default class NoteModel {
     return result;
   }
 
-  static async findByUserId(userId: string) {
-    return this.collection()
-      .find({ userId: new ObjectId(userId) })
+  static async findAll(userId: string) {
+    const notes = await this.collection()
+      .find({
+        userId: new ObjectId(userId),
+        deletedAt: { $exist: false },
+      })
       .toArray();
+    return notes;
   }
 
   static async findById(noteId: string) {
-    return this.collection().findOne({ _id: new ObjectId(noteId) });
+    const note = await this.collection().findOne({
+      _id: new ObjectId(noteId),
+      deletedAt: { $exist: false },
+    });
+    return note;
   }
 
   static async updateById(noteId: string, body: NoteType) {
@@ -64,6 +72,16 @@ export default class NoteModel {
   }
 
   static async deleteById(noteId: string) {
-    await this.collection().deleteOne({ _id: new ObjectId(noteId) });
+    await this.collection().updateOne(
+      { _id: new ObjectId(noteId) },
+      { $set: { deletedAt: new Date() } }
+    );
+  }
+
+  static async restoreById(noteId: string) {
+    await this.collection().updateOne(
+      { _id: new ObjectId(noteId) },
+      { $unset: { deletedAt: "" } }
+    );
   }
 }

@@ -45,7 +45,7 @@ export async function GET(request: Request) {
       throw { message: "User not found", status: 404 };
     }
 
-    const notes = await NoteModel.findByUserId(userId);
+    const notes = await NoteModel.findAll(userId);
 
     return new Response(JSON.stringify(notes), { status: 200 });
   } catch (error) {

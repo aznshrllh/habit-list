@@ -6,31 +6,77 @@ export type UserType = {
   name: string;
   email: string;
   password: string;
-  habits: HabitType[];
 };
 
 export type HabitType = {
   _id?: ObjectId;
   name: string;
-  goal: number;
-  logs: IntervalType[];
+  description: string;
+  category: string;
+  points: number;
 };
-
-//interval type seperti daily, weekly, monthly
-export type IntervalType = {
+export type UserHabitType = {
   _id?: ObjectId;
-  name: string;
-  date: string;
+  userId?: ObjectId;
+  habitId?: ObjectId;
+  frequency: number;
+  interval: number;
   completed: boolean;
 };
 
 export type NoteType = {
   _id?: ObjectId;
+  userId: ObjectId;
   name: string;
   description: string;
+  points?: number;
+};
+
+export type ProgressType = {
+  _id?: ObjectId;
   userId: ObjectId;
-  // createdAt: string;
-  // updatedAt: string;
+  habitId: ObjectId;
+  date: Date;
+  completed: boolean;
+  notes?: string;
+};
+
+export type AchievementType = {
+  _id?: ObjectId;
+  title: string;
+  description: string;
+  category: string;
+  points: number;
+};
+
+export type UserAchievementType = {
+  _id?: ObjectId;
+  userId: ObjectId;
+  achievementId: ObjectId;
+  completed: boolean;
+};
+
+export type UserPointsType = {
+  _id?: ObjectId;
+  userId: ObjectId;
+  points: number;
+};
+
+export type BookType = {
+  _id?: ObjectId;
+  title: string;
+  author: string;
+  category: string;
+  points: number;
+};
+
+export type DoneReadBookType = {
+  _id?: ObjectId;
+  userId?: ObjectId;
+  bookId?: ObjectId;
+  finishDate: string;
+  rating?: number;
+  notes?: string;
 };
 
 export type CustomError = {

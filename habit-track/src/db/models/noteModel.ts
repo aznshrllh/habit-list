@@ -66,7 +66,6 @@ export default class NoteModel {
       { _id: new ObjectId(noteId) },
       { $set: result }
     );
-    return;
 
     return result;
   }
